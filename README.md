@@ -11,7 +11,3 @@ Unlike general-purpose chatbots or AI tools, this app is designed **strictly for
 The application supports both **English** and **Filipino** languages, allowing users to craft messages in the language that best conveys their feelings. Built with simplicity, privacy, and intentionality in mind, it aims to be your quiet co-writer for the moments when words feel just out of reach.
 
 ## 🎯 Purpose
-
-There are times when you know how you feel—but not always how to say it. This app is for those moments. It’s not about outsourcing emotion; it’s about refining it.
-
----

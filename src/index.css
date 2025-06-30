@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-dm-serif-display: "DM Serif Diplay", serif;
+  --font-libre-franklin: "Libre Franklin", sans-serif;
+  --color-light-bg: #F9F6F1;
+  --color-dark-bg: #1C1B23;
+  --color-light-fg: #2F2F2F;
+  --color-light-secondary-fg: #777;
+  --color-dark-fg: #EAEAEA ;
+  --color-dark-secondary-fg: #AAA;
+}
+
+@layer base {
+  :root {
+    --background: #F9F6F1;
+    --foreground: #2F2F2F;
+    --secondary-foreground: #777;
+  }
+  .dark {
+    --background: #1C1B23;
+    --foreground: #EAEAEA;
+    --secondary-foreground: #AAA;
+  }
+
+  body {
+    background: var(--color-light-bg);
+    font-family: var(--font-libre-franklin);
+  }
+}
