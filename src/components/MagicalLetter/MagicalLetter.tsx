@@ -6,8 +6,7 @@ export default function MagicalLetter() {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div onClick={() => setIsOpen(true)} className="cursor-pointer relative">
-        {/* Envelope */}
+      <div onClick={() => setIsOpen(true)} className="cursor-pointer relative">      
         <motion.div
           initial={{ rotateX: 0 }}
           animate={isOpen ? { rotateX: 180 } : { rotateX: 0 }}
@@ -20,7 +19,6 @@ export default function MagicalLetter() {
           </div>
         </motion.div>
 
-        {/* Letter (revealed) */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -40,7 +38,6 @@ export default function MagicalLetter() {
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
     </div>
   );
