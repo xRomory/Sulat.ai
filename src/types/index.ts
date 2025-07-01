@@ -9,4 +9,3 @@ export type Tone =
   | "witty"
   | "humble"
   | "professional";
-
