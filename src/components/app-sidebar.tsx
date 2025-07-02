@@ -1,4 +1,4 @@
-import { PenLine, Search, Settings } from "lucide-react"
+import { PenLine, Search } from "lucide-react";
 
 import {
   Sidebar,
@@ -9,13 +9,13 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 // Menu items.
 const items = [
   {
     title: "New Chat",
-    url: "#",
+    url: "/home",
     icon: PenLine,
   },
   {
@@ -23,21 +23,19 @@ const items = [
     url: "#",
     icon: Search,
   },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-]
+];
 
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarContent className="px-2 py-2">
+      <SidebarContent className="px-2 py-2 shadow-sm">
         <SidebarGroup>
-          <SidebarGroupLabel className="font-dm-serif-display font-bold text-3xl mb-4">
-            Sulat.ai
-          </SidebarGroupLabel>
+          <div className="mb-8">
+            <SidebarGroupLabel className="font-dm-serif-display text-3xl text-foreground">
+              Sulat.ai
+            </SidebarGroupLabel>
+          </div>
+
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -45,7 +43,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span className="text-base">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -55,5 +53,5 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

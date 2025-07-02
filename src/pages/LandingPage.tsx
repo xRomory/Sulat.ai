@@ -1,17 +1,15 @@
 import React from "react";
-// import Layout from "@/app/layout";
-import { LetterInput } from "@/components/LetterInput/LetterInput";
+import Layout from "@/app/layout";
+import { LetterAnimation } from "@/components/LetterAnimation/LetterAnimation";
 
 const LandingPage: React.FC = () => {
-  const handleLetterSubmit = (text: string) => {
-    //Insert Logic
-  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="font-dm-serif-display text-6xl md:text-7xl mb-2">Sulat.ai</h1>
-          <LetterInput onSubmit={handleLetterSubmit}/>
+    <div className="min-h-screen">
+      <div className="px-2">
+        <Layout>
+          <LetterAnimation />
+        </Layout>
       </div>
     </div>
   );
