@@ -9,3 +9,16 @@ export type Tone =
   | "witty"
   | "humble"
   | "professional";
+
+export interface LetterInputProps {
+  onSubmit: (text: string) => void;
+}
+
+export interface MagicalBasketProps {
+  letterContent: string;
+  onBasketTap: () => void;
+}
+
+export interface MagicalEnvelopeProps {
+  letterContent: string;
+}

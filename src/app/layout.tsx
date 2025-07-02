@@ -5,10 +5,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
+      <SidebarTrigger />
+      <main className="flex mx-auto">
+        <div className="flex items-center justify-center">
+          {children}
+        </div>
       </main>
     </SidebarProvider>
-  )
+  );
 }
