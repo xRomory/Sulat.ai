@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { MagicalEnvelopeProps } from "@/types";
+
+export interface MagicalEnvelopeProps {
+  letterContent: string;
+}
 
 export const MagicalEnvelope: React.FC<MagicalEnvelopeProps> = ({ letterContent }) => {
   const [isOpen, setIsOpen] = useState(false);

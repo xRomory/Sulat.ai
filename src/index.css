@@ -8,6 +8,7 @@
   --color-message-input: #F6EDDC;
   --color-primary-hover: #F2DAB2;
   --color-light-accent: #f4a261;
+  --color-light-modal: #F2DCB9;
 }
 
 .logo {
@@ -74,7 +75,7 @@
   --primary-foreground: oklch(0.985 0 0);
 
   --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary-foreground: #777777;
 
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);

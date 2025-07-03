@@ -1,18 +1,38 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { SendHorizonal, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import type { LetterInputProps } from "@/types";
+import { SettingsModal } from "@/components/Modal/SettingsModal";
+import type { ToneSettings } from "@/types";
+import { SendHorizonal, Settings2 } from "lucide-react";
 
-export const LetterInput: React.FC<LetterInputProps> = ({ onSubmit }) => {
+export interface LetterInputProps {
+  onSubmit: (text: string) => void;
+  onToneSettingsChange?: (settings: ToneSettings) => void;
+  initialToneSettings?: ToneSettings;
+}
+
+export const LetterInput: React.FC<LetterInputProps> = ({ onSubmit, onToneSettingsChange, initialToneSettings }) => {
   const [letter, setLetter] = useState("");
+  const [toneSettingsOpen, setToneSettingsOpen] = useState(false);
+  const [toneSettings, setToneSettings] = useState<ToneSettings>(initialToneSettings || {
+    messageType: "good-morning",
+    toneStyles: [],
+    messageLength: "short",
+    language: "english",
+    enhancements: [],
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if(letter.trim()) onSubmit(letter);
   };
+
+  const handleToneSettingsChange = (newSettings: ToneSettings) => {
+    setToneSettings(newSettings);
+    if(onToneSettingsChange) onToneSettingsChange(newSettings);
+  }
 
   return (
     <motion.div
@@ -30,7 +50,10 @@ export const LetterInput: React.FC<LetterInputProps> = ({ onSubmit }) => {
         />
         <div className="flex justify-between items-center px-4">
           <Button
+            type="button"
+            onClick={() => setToneSettingsOpen(true)}
             className="flex gap-2 bg-transparent shadow-none text-foreground hover:bg-primary-hover rounded-xl px-4 py-1 cursor-pointer"
+            title="Adjust Tone Settings"
           >
             <Settings2 />
             <p className="text-xs md:text-sm">Adjust Settings</p>
@@ -44,6 +67,13 @@ export const LetterInput: React.FC<LetterInputProps> = ({ onSubmit }) => {
           </Button>
         </div>
       </form>
+
+      <SettingsModal 
+        open={toneSettingsOpen}
+        onOpenChange={setToneSettingsOpen}
+        settings={toneSettings}
+        onSettingsChange={handleToneSettingsChange}
+      />
     </motion.div>
   );
 };

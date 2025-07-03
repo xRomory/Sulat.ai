@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import type { MagicalBasketProps } from "@/types";
+
+export interface MagicalBasketProps {
+  letterContent: string;
+  onBasketTap: () => void;
+}
 
 export const MagicalBasket: React.FC<MagicalBasketProps> = ({
   letterContent,

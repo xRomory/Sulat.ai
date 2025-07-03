@@ -1,3 +1,6 @@
+export type MessageType =
+  | "";
+
 export type Tone = 
   | "casual"
   | "sincere"
@@ -10,15 +13,18 @@ export type Tone =
   | "humble"
   | "professional";
 
-export interface LetterInputProps {
-  onSubmit: (text: string) => void;
+export interface MessageRequest {
+  contentIdea: string;
+  toneStyles: Tone;
+  messageLength: "short" | "medium" | "long";
+  language: "english" | "filipino" | "taglish";
+  enhancements: string[];
 }
 
-export interface MagicalBasketProps {
-  letterContent: string;
-  onBasketTap: () => void;
-}
-
-export interface MagicalEnvelopeProps {
-  letterContent: string;
+export interface ToneSettings {
+  messageType: string;
+  toneStyles: string[];
+  messageLength: string;
+  language: string;
+  enhancements: string[];
 }
