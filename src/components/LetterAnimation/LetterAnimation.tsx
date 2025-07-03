@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LetterInput } from "./LetterInput";
 import { MagicalBasket } from "./MagicalBasket";
 import { MagicalEnvelope } from "./MagicalEnvelope";
+import { Button } from "../ui/button";
 
 export const LetterAnimation: React.FC = () => {
   const [letterContent, setLetterContent] = useState<string>("");
@@ -73,6 +74,21 @@ export const LetterAnimation: React.FC = () => {
               transition={{ duration: 0.6 }}
             >
               <MagicalEnvelope letterContent={letterContent} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5, duration: 0.5 }}
+              className="mt-8 flex justify-center"
+            >
+              <Button 
+                onClick={handleReset} 
+                variant="outline" 
+                className="bg-white/80 hover:bg-white border-pink-200 text-accent hover:text-accent/80 hover:border-accent/80"
+              >
+                Write Another Letter
+              </Button>
             </motion.div>
           </motion.div>
         )}
