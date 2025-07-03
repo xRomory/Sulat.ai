@@ -1,23 +1,23 @@
 import React from "react";
-import { 
+import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose
+  DialogClose,
 } from "@/components/ui/dialog";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue, 
+  SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import type { ToneSettings } from "@/types";
+import type { ToneSettings, Tone, Occasion, MessageType, Enhancement } from "@/types";
 
 interface ToneSettingsModalProps {
   open: boolean;
@@ -26,47 +26,60 @@ interface ToneSettingsModalProps {
   onSettingsChange: (settings: ToneSettings) => void;
 }
 
-export const SettingsModal: React.FC<ToneSettingsModalProps> = ({ open, onOpenChange, settings, onSettingsChange }) => {
-  const handleMessageTypeChange = (value: string) => onSettingsChange({ ...settings, messageType: value });
+export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
+  open,
+  onOpenChange,
+  settings,
+  onSettingsChange,
+}) => {
+  const handleMessageTypeChange = (value: string) =>
+    onSettingsChange({ ...settings, messageType: value as MessageType });
 
   const handleToneStyleToggle = (value: string) => {
     const currentTones = [...settings.toneStyles];
-    if(currentTones.includes(value)) {
+    if (currentTones.includes(value as Tone)) {
       onSettingsChange({
         ...settings,
-        toneStyles: currentTones.filter((tone) => tone !== value),
+        toneStyles: currentTones.filter((tone) => tone !== (value as Tone)),
       });
     } else {
       onSettingsChange({
         ...settings,
-        toneStyles: [...currentTones, value],
+        toneStyles: [...currentTones, value as Tone],
       });
     }
   };
 
-  const handleMessageLengthChange = (value: string) => onSettingsChange({ ...settings, messageLength: value });
+  const handleOccasionChange = (value: string) =>
+    onSettingsChange({ ...settings, occasion: value as Occasion });
 
-  const handleLanguageChange = (value: string) => onSettingsChange({ ...settings, language: value });
+  const handleMessageLengthChange = (value: string) =>
+    onSettingsChange({ ...settings, messageLength: value as "short" | "medium" | "long" });
+
+  const handleLanguageChange = (value: string) =>
+    onSettingsChange({ ...settings, language: value as "english" | "filipino" | "taglish" });
 
   const handleEnhancementToggle = (value: string) => {
     const currentEnhancements = [...settings.enhancements];
 
-    if(currentEnhancements.includes(value)) {
+    if (currentEnhancements.includes(value as Enhancement)) {
       onSettingsChange({
         ...settings,
-        enhancements: currentEnhancements.filter((enhance) => enhance !== value),
+        enhancements: currentEnhancements.filter(
+          (enhance) => enhance !== (value as Enhancement)
+        ),
       });
     } else {
       onSettingsChange({
         ...settings,
-        enhancements: [...currentEnhancements, value],
+        enhancements: [...currentEnhancements, value as Enhancement],
       });
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xs max-h-9/12 md:max-w-md p-0 overflow-auto bg-light-modal border-0 rounded-lg">
+      <DialogContent className="max-w-xs max-h-9/12 md:max-h-max md:max-w-md p-0 overflow-auto bg-light-modal border-0 rounded-lg no-scrollbar">
         <div className="p-6 space-y-6">
           <DialogHeader className="p-0 space-y-0.5">
             <div className="flex justify-center items-center">
@@ -78,16 +91,31 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({ open, onOpenCh
           <div className="space-y-6">
             {/* Message Type */}
             <div className="space-y-3">
-              <Label className="text-secondary-foreground font-medium">Message Type</Label>
-              <RadioGroup 
+              <Label className="text-secondary-foreground font-medium">
+                Message Type
+              </Label>
+              <RadioGroup
                 value={settings.messageType}
                 onValueChange={handleMessageTypeChange}
                 className="grid grid-cols-2 gap-2 pt-1"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem id="message-good" value="good-morning" />
-                  <Label htmlFor="message-good" className="text-sm font-normal">
-                    Good morning / Good Evening
+                  <RadioGroupItem id="message-morning" value="good-morning" />
+                  <Label
+                    htmlFor="message-morning"
+                    className="text-sm font-normal"
+                  >
+                    Good morning
+                  </Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem id="message-evening" value="good-evening" />
+                  <Label
+                    htmlFor="message-evening"
+                    className="text-sm font-normal"
+                  >
+                    Good Evening
                   </Label>
                 </div>
 
@@ -99,44 +127,61 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({ open, onOpenCh
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem id="message-appreciation" value="appreciation" />
-                  <Label htmlFor="message-appreciation" className="text-sm font-normal">
+                  <RadioGroupItem
+                    id="message-appreciation"
+                    value="appreciation"
+                  />
+                  <Label
+                    htmlFor="message-appreciation"
+                    className="text-sm font-normal"
+                  >
                     Appreciation
                   </Label>
                 </div>
 
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem id="message-apology" value="apology" />
-                  <Label htmlFor="message-apology" className="text-sm font-normal">
+                  <Label
+                    htmlFor="message-apology"
+                    className="text-sm font-normal"
+                  >
                     Apology
                   </Label>
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem id="message-encouragement" value="encouragement" />
-                  <Label htmlFor="message-encouragement" className="text-sm font-normal">
+                  <RadioGroupItem
+                    id="message-encouragement"
+                    value="encouragement"
+                  />
+                  <Label
+                    htmlFor="message-encouragement"
+                    className="text-sm font-normal"
+                  >
                     Encouragement
                   </Label>
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem id="message-thinking" value="thinking-of-you" />
-                  <Label htmlFor="message-thinking" className="text-sm font-normal">
-                    Just Thinking of You
-                  </Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
                   <RadioGroupItem id="message-romantic" value="romantic" />
-                  <Label htmlFor="message-romantic" className="text-sm font-normal">
-                    Sweet Note / Romantic
+                  <Label
+                    htmlFor="message-romantic"
+                    className="text-sm font-normal"
+                  >
+                    Sweet Note
                   </Label>
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem id="message-special" value="special-occasions" />
-                  <Label htmlFor="message-special" className="text-sm font-normal">
-                    Special Occasions
+                  <RadioGroupItem
+                    id="message-professional"
+                    value="professional"
+                  />
+                  <Label
+                    htmlFor="message-professional"
+                    className="text-sm font-normal"
+                  >
+                    Professional
                   </Label>
                 </div>
               </RadioGroup>
@@ -144,97 +189,159 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({ open, onOpenCh
 
             {/* Tone */}
             <div className="space-y-3">
-              <Label className="text-secondary-foreground font-medium">Tone (Style of Voice)</Label>
+              <Label className="text-secondary-foreground font-medium">
+                Tone (Style of Voice)
+              </Label>
               <div className="grid grid-cols-2 gap-2 pt-1">
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-casual" 
+                  <Checkbox
+                    id="tone-casual"
                     checked={settings.toneStyles.includes("casual")}
                     onCheckedChange={() => handleToneStyleToggle("casual")}
                   />
-                  <Label htmlFor="tone-casual" className="text-sm font-normal">Casual</Label>
+                  <Label htmlFor="tone-casual" className="text-sm font-normal">
+                    Casual
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-sincere" 
+                  <Checkbox
+                    id="tone-sincere"
                     checked={settings.toneStyles.includes("sincere")}
                     onCheckedChange={() => handleToneStyleToggle("sincere")}
                   />
-                  <Label htmlFor="tone-sincere" className="text-sm font-normal">Sincere</Label>
+                  <Label htmlFor="tone-sincere" className="text-sm font-normal">
+                    Sincere
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-romantic" 
+                  <Checkbox
+                    id="tone-romantic"
                     checked={settings.toneStyles.includes("romantic")}
                     onCheckedChange={() => handleToneStyleToggle("romantic")}
                   />
-                  <Label htmlFor="tone-romantic" className="text-sm font-normal">Romantic</Label>
+                  <Label
+                    htmlFor="tone-romantic"
+                    className="text-sm font-normal"
+                  >
+                    Romantic
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-poetic" 
+                  <Checkbox
+                    id="tone-poetic"
                     checked={settings.toneStyles.includes("poetic")}
                     onCheckedChange={() => handleToneStyleToggle("poetic")}
                   />
-                  <Label htmlFor="tone-poetic" className="text-sm font-normal">Poetic</Label>
+                  <Label htmlFor="tone-poetic" className="text-sm font-normal">
+                    Poetic
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-playful" 
+                  <Checkbox
+                    id="tone-playful"
                     checked={settings.toneStyles.includes("playful")}
                     onCheckedChange={() => handleToneStyleToggle("playful")}
                   />
-                  <Label htmlFor="tone-playful" className="text-sm font-normal">Playful</Label>
+                  <Label htmlFor="tone-playful" className="text-sm font-normal">
+                    Playful
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-warm" 
-                    checked={settings.toneStyles.includes("warm")}
-                    onCheckedChange={() => handleToneStyleToggle("warm")}
+                  <Checkbox
+                    id="tone-warm"
+                    checked={settings.toneStyles.includes("warm and gentle")}
+                    onCheckedChange={() => handleToneStyleToggle("warm and gentle")}
                   />
-                  <Label htmlFor="tone-warm" className="text-sm font-normal">Warm and Gentle</Label>
+                  <Label htmlFor="tone-warm" className="text-sm font-normal">
+                    Warm and Gentle
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-thoughtful" 
+                  <Checkbox
+                    id="tone-thoughtful"
                     checked={settings.toneStyles.includes("thoughtful")}
                     onCheckedChange={() => handleToneStyleToggle("thoughtful")}
                   />
-                  <Label htmlFor="tone-thoughtful" className="text-sm font-normal">Thoughtful</Label>
+                  <Label
+                    htmlFor="tone-thoughtful"
+                    className="text-sm font-normal"
+                  >
+                    Thoughtful
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-witty" 
+                  <Checkbox
+                    id="tone-witty"
                     checked={settings.toneStyles.includes("witty")}
                     onCheckedChange={() => handleToneStyleToggle("witty")}
                   />
-                  <Label htmlFor="tone-witty" className="text-sm font-normal">Witty / Clever</Label>
+                  <Label htmlFor="tone-witty" className="text-sm font-normal">
+                    Witty / Clever
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-humble" 
+                  <Checkbox
+                    id="tone-humble"
                     checked={settings.toneStyles.includes("humble")}
                     onCheckedChange={() => handleToneStyleToggle("humble")}
                   />
-                  <Label htmlFor="tone-humble" className="text-sm font-normal">Humble</Label>
+                  <Label htmlFor="tone-humble" className="text-sm font-normal">
+                    Humble
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="tone-professional" 
-                    checked={settings.toneStyles.includes("professional")}
-                    onCheckedChange={() => handleToneStyleToggle("professional")}
+                  <Checkbox
+                    id="tone-professional"
+                    checked={settings.toneStyles.includes("formal")}
+                    onCheckedChange={() =>
+                      handleToneStyleToggle("formal")
+                    }
                   />
-                  <Label htmlFor="tone-professional" className="text-sm font-normal">Professional</Label>
+                  <Label
+                    htmlFor="tone-professional"
+                    className="text-sm font-normal"
+                  >
+                    Professional
+                  </Label>
                 </div>
               </div>
             </div>
-            
+
+            {/* Ocaasions */}
+            <div className="space-y-3">
+              <Label className="text-secondary-foreground font-medium">
+                Occasion
+              </Label>
+              <div className="pt-1">
+                <Select
+                  value={settings.occasion}
+                  onValueChange={handleOccasionChange}
+                >
+                  <SelectTrigger className="w-full bg-amber-100/80 border-amber-200">
+                    <SelectValue placeholder="Select Occasion" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">Normal Days</SelectItem>
+                    <SelectItem value="birthday">Birthday</SelectItem>
+                    <SelectItem value="anniversary">Anniversary</SelectItem>
+                    <SelectItem value="valentine's day">Valentine's Day</SelectItem>
+                    <SelectItem value="new year">New Year</SelectItem>
+                    <SelectItem value="christmas">Christmas</SelectItem>
+                    <SelectItem value="mother's day">Mother's Day</SelectItem>
+                    <SelectItem value="father's day">Father's Day</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
             {/* Message Length */}
             <div className="space-y-3">
-              <Label className="text-secondary-foreground font-medium">Message Length</Label>
+              <Label className="text-secondary-foreground font-medium">
+                Message Length
+              </Label>
               <div className="pt-1">
-                <Select 
-                  value={settings.messageLength} 
+                <Select
+                  value={settings.messageLength}
                   onValueChange={handleMessageLengthChange}
                 >
                   <SelectTrigger className="w-full bg-amber-100/80 border-amber-200">
@@ -242,7 +349,9 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({ open, onOpenCh
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="short">Short (1-2 sentences)</SelectItem>
-                    <SelectItem value="medium">Medium (3-5 sentences)</SelectItem>
+                    <SelectItem value="medium">
+                      Medium (3-5 sentences)
+                    </SelectItem>
                     <SelectItem value="long">Long (6+ sentences)</SelectItem>
                   </SelectContent>
                 </Select>
@@ -251,10 +360,12 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({ open, onOpenCh
 
             {/* Language */}
             <div className="space-y-3">
-              <Label className="text-secondary-foreground font-medium">Language</Label>
+              <Label className="text-secondary-foreground font-medium">
+                Language
+              </Label>
               <div className="pt-1">
-                <Select 
-                  value={settings.language} 
+                <Select
+                  value={settings.language}
                   onValueChange={handleLanguageChange}
                 >
                   <SelectTrigger className="w-full bg-amber-100/80 border-amber-200">
@@ -270,39 +381,75 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({ open, onOpenCh
             </div>
 
             <div className="space-y-3">
-              <Label className="text-secondary-foreground font-medium">Optional Enhancements</Label>
+              <Label className="text-secondary-foreground font-medium">
+                Optional Enhancements
+              </Label>
               <div className="space-y-2 pt-1">
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
+                  <Checkbox
                     id="enhance-quote"
-                    checked={settings.enhancements.includes("quote")}
-                    onCheckedChange={() => handleEnhancementToggle("quote")}
+                    checked={settings.enhancements.includes("include quote")}
+                    onCheckedChange={() =>
+                      handleEnhancementToggle("include quote")
+                    }
                   />
-                  <Label htmlFor="enhance-quote" className="font-normal">Add a quote</Label>
+                  <Label htmlFor="enhance-quote" className="font-normal">
+                    Include quote
+                  </Label>
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
+                  <Checkbox
                     id="enhance-poetic"
-                    checked={settings.enhancements.includes("quote")}
-                    onCheckedChange={() => handleEnhancementToggle("quote")}
+                    checked={settings.enhancements.includes("make it poetic")}
+                    onCheckedChange={() =>
+                      handleEnhancementToggle("make it poetic")
+                    }
                   />
-                  <Label htmlFor="enhance-poetic" className="font-normal">Add a poetic line</Label>
+                  <Label htmlFor="enhance-poetic" className="font-normal">
+                    Make it poetic
+                  </Label>
                 </div>
 
                 <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="enhance-humor"
+                    checked={settings.enhancements.includes("add humor")}
+                    onCheckedChange={() => handleEnhancementToggle("add humor")}
+                  />
+                  <Label htmlFor="enhance-poetic" className="font-normal">
+                    Add humor
+                  </Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="enhance-heartfelt"
+                    checked={settings.enhancements.includes(
+                      "make it heartfelt"
+                    )}
+                    onCheckedChange={() =>
+                      handleEnhancementToggle("make it heartfelt")
+                    }
+                  />
+                  <Label htmlFor="enhance-poetic" className="font-normal">
+                    Make it heartfelt
+                  </Label>
+                </div>
+
+                {/* <div className="flex items-center space-x-2">
                   <Checkbox 
                     id="enhance-name"
-                    checked={settings.enhancements.includes("quote")}
-                    onCheckedChange={() => handleEnhancementToggle("quote")}
+                    checked={settings.enhancements.includes("name")}
+                    onCheckedChange={() => handleEnhancementToggle("name")}
                   />
                   <Label htmlFor="enhance-name" className="font-normal">Include the recipient's name</Label>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
         </div>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};

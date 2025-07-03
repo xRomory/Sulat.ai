@@ -1,12 +1,8 @@
 from fastapi import FastAPI
+from routers import messages
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 
 app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"return": "Hello from FastAPI!"}
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,3 +11,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(messages.router)
+
+@app.get("/")
+def read_root():
+    return {"return": "Hello from FastAPI!"}
