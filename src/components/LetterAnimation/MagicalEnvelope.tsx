@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ReactMarkdown from "react-markdown";
 
 export interface MagicalEnvelopeProps {
   letterContent: string;
@@ -89,7 +90,7 @@ export const MagicalEnvelope: React.FC<MagicalEnvelopeProps> = ({ letterContent 
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 w-[90%] h-[85%] bg-white rounded shadow-lg p-6 z-0"
+            className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-full h-full bg-white rounded shadow-lg p-6 z-0"
             variants={letterAnimation}
             initial="hidden"
             animate="visible"
@@ -102,7 +103,7 @@ export const MagicalEnvelope: React.FC<MagicalEnvelopeProps> = ({ letterContent 
                 transition={{ delay: 0.6, duration: 0.5 }}
                 className="font-handwriting text-lg text-gray-800 whitespace-pre-wrap"
               >
-                {letterContent}
+                <ReactMarkdown>{letterContent}</ReactMarkdown>
               </motion.div>
             </div>
             <div className="absolute bottom-3 right-3 w-8 h-8">

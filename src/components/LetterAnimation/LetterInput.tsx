@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { SendHorizonal, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { SettingsModal } from "@/components/Modal/SettingsModal";
 import type { ToneSettings } from "@/types";
-import { SendHorizonal, Settings2 } from "lucide-react";
 
 export interface LetterInputProps {
-  onSubmit: (text: string) => void;
+  onSubmit: (prompt: string, settings: ToneSettings) => void;
   onToneSettingsChange?: (settings: ToneSettings) => void;
   initialToneSettings?: ToneSettings;
 }
@@ -18,6 +18,7 @@ export const LetterInput: React.FC<LetterInputProps> = ({ onSubmit, onToneSettin
   const [toneSettings, setToneSettings] = useState<ToneSettings>(initialToneSettings || {
     messageType: "good-morning",
     toneStyles: [],
+    occasion: "none",
     messageLength: "short",
     language: "english",
     enhancements: [],
@@ -25,8 +26,7 @@ export const LetterInput: React.FC<LetterInputProps> = ({ onSubmit, onToneSettin
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if(letter.trim()) onSubmit(letter);
+    if(letter.trim()) onSubmit(letter, toneSettings);
   };
 
   const handleToneSettingsChange = (newSettings: ToneSettings) => {

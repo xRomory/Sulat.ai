@@ -1,19 +1,40 @@
 import React, { useState } from "react";
+import LoadingSpinner from "../LoadingSpinner";
 import { motion, AnimatePresence } from "framer-motion";
 import { LetterInput } from "./LetterInput";
 import { MagicalBasket } from "./MagicalBasket";
 import { MagicalEnvelope } from "./MagicalEnvelope";
 import { Button } from "../ui/button";
+import { composeMessage } from "@/services/api";
+import type { ToneSettings } from "@/types";
 
 export const LetterAnimation: React.FC = () => {
   const [letterContent, setLetterContent] = useState<string>("");
-  const [appState, setAppState] = useState<"input" | "basket" | "envelope">(
-    "input"
-  );
+  const [appState, setAppState] = useState<"input" | "basket" | "envelope">("input");
+  const [loading, setLoading] = useState(false);
 
-  const handleLetterSubmit = (text: string) => {
-    setLetterContent(text);
-    setAppState("basket");
+  const handleLetterSubmit = async (prompt: string, settings: ToneSettings) => {
+    setLoading(true);
+
+    const request = {
+      contentIdea: prompt,
+      messageType: settings.messageType,
+      toneStyles: settings.toneStyles,
+      occasion: settings.occasion,
+      messageLength: settings.messageLength,
+      language: settings.language,
+      enhancements: settings.enhancements,
+    }
+    
+    try {
+      const generated = await composeMessage(request);
+      setLetterContent(generated);
+      setLoading(false);
+      setAppState("basket");
+    } catch (error) {
+      setLoading(false);
+      console.error("Error generating message:", error);
+    }
   };
 
   const handleBasketTap = () => setAppState("envelope");
@@ -31,7 +52,7 @@ export const LetterAnimation: React.FC = () => {
       transition={{ duration: 1 }}
     >
       <AnimatePresence mode="wait">
-        {appState === "input" && (
+        {appState === "input" && !loading && (
           <motion.div
             key="input"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -48,6 +69,19 @@ export const LetterAnimation: React.FC = () => {
               Sulat.ai
             </motion.h1>
             <LetterInput onSubmit={handleLetterSubmit} />
+          </motion.div>
+        )}
+
+        {loading && (
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-col items-center justify-center min-h-[300px]"
+          >
+            <LoadingSpinner />
           </motion.div>
         )}
 
