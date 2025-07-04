@@ -12,27 +12,33 @@ export interface LetterInputProps {
   initialToneSettings?: ToneSettings;
 }
 
-export const LetterInput: React.FC<LetterInputProps> = ({ onSubmit, onToneSettingsChange, initialToneSettings }) => {
+export const LetterInput: React.FC<LetterInputProps> = ({
+  onSubmit,
+  onToneSettingsChange,
+  initialToneSettings,
+}) => {
   const [letter, setLetter] = useState("");
   const [toneSettingsOpen, setToneSettingsOpen] = useState(false);
-  const [toneSettings, setToneSettings] = useState<ToneSettings>(initialToneSettings || {
-    messageType: "good-morning",
-    toneStyles: [],
-    occasion: "none",
-    messageLength: "short",
-    language: "english",
-    enhancements: [],
-  });
+  const [toneSettings, setToneSettings] = useState<ToneSettings>(
+    initialToneSettings || {
+      messageType: "good-morning",
+      toneStyles: [],
+      occasion: "none",
+      messageLength: "short",
+      language: "english",
+      enhancements: [],
+    }
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if(letter.trim()) onSubmit(letter, toneSettings);
+    if (letter.trim()) onSubmit(letter, toneSettings);
   };
 
   const handleToneSettingsChange = (newSettings: ToneSettings) => {
     setToneSettings(newSettings);
-    if(onToneSettingsChange) onToneSettingsChange(newSettings);
-  }
+    if (onToneSettingsChange) onToneSettingsChange(newSettings);
+  };
 
   return (
     <motion.div
@@ -59,16 +65,16 @@ export const LetterInput: React.FC<LetterInputProps> = ({ onSubmit, onToneSettin
             <p className="text-xs md:text-sm">Adjust Settings</p>
           </Button>
 
-          <Button 
+          <Button
             type="submit"
             className="rounded-full w-7 h-7 md:w-10 md:h-10"
           >
-            <SendHorizonal className="text-foreground"/>
+            <SendHorizonal className="text-foreground" />
           </Button>
-        </div>
+        </div>  
       </form>
 
-      <SettingsModal 
+      <SettingsModal
         open={toneSettingsOpen}
         onOpenChange={setToneSettingsOpen}
         settings={toneSettings}
