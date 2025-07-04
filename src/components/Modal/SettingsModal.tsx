@@ -437,14 +437,6 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
                   </Label>
                 </div>
 
-                {/* <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="enhance-name"
-                    checked={settings.enhancements.includes("name")}
-                    onCheckedChange={() => handleEnhancementToggle("name")}
-                  />
-                  <Label htmlFor="enhance-name" className="font-normal">Include the recipient's name</Label>
-                </div> */}
               </div>
             </div>
           </div>
