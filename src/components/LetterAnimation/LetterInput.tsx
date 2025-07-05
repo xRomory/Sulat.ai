@@ -45,14 +45,14 @@ export const LetterInput: React.FC<LetterInputProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-xs min-w-xs md:min-w-3xl mx-auto pb-2 md:pb-4 bg-message-input rounded-xl shadow-lg"
+      className="w-full max-w-xs min-w-xs sm:min-w-xl md:min-w-2xl lg:min-w-4xl mx-auto pb-2 md:pb-4 bg-message-input rounded-xl shadow-lg"
     >
       <form onSubmit={handleSubmit} className="space-y-2 md:space-y-4">
         <Textarea
           placeholder="What do want to write today?"
           value={letter}
           onChange={(e) => setLetter(e.target.value)}
-          className="w-full border-none p-4 text-sm md:text-base focus-visible:ring-0 max-h-36 md:min-h-[80px] md:p-6 overflow-y-auto no-scrollbar"
+          className="w-full border-none p-4 text-sm md:text-lg focus-visible:ring-0 max-h-36 md:min-h-[80px] md:p-6 overflow-y-auto no-scrollbar"
         />
         <div className="flex justify-between items-center px-4">
           <Button
