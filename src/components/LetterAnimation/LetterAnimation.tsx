@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "../utils/LoadingSpinner";
 import { motion, AnimatePresence } from "framer-motion";
 import { LetterInput } from "./LetterInput";
 import { MagicalBasket } from "./MagicalBasket";

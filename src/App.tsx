@@ -5,7 +5,8 @@ import { queryClient } from "./lib/queryClient";
 import { LandingPage } from "./pages/LandingPage";
 import StartMenu from "./pages/StartMenu/StartMenu";
 
-const LoginPage = lazy(() => import("./pages/LoginPage"))
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const SignupPage = lazy(() => import("./pages/SignupPage"));
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
   },
   { path: "/home", element: <LandingPage /> },
   { path: "/login", element: <LoginPage /> },
+  { path: "/signup", element: <SignupPage /> },
 ])
 
 function App() {

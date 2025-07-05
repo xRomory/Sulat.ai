@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { MailOpenIcon, HeartIcon } from "lucide-react";
 
-export const LoginHeader = () => {
+export const SignupHeader = () => {
   return (
     <div className="text-center mb-8">
       <motion.div
@@ -19,10 +19,10 @@ export const LoginHeader = () => {
           <HeartIcon className="h-6 w-6 text-red-500 absolute top-1 right-1 animate-pulse" />
         </div>
       </motion.div>
-      <h1 className="text-3xl font-dm-serif-display">
-        Sulat.ai
-      </h1>
-      <p className="text-secondary-foreground mt-2">Sign in to send your magical letters</p>
+      <h1 className="text-3xl font-dm-serif-display">Sulat.ai</h1>
+      <p className="text-secondary-foreground mt-2">
+        Create an account to begin your heartfelt letter
+      </p>
     </div>
   );
 };
