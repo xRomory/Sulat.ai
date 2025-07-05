@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -81,7 +81,7 @@ export const LoginForm = () => {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#ffd45f] to-[#F37335] hover:from-[#BFA3F3]/60 hover:to-accent font-medium"
+              className="w-full bg-gradient-to-r from-[#ffd45f] to-secondary hover:from-[#BFA3F3]/60 hover:to-accent font-semibold"
             >
               Login
             </Button>
@@ -91,7 +91,7 @@ export const LoginForm = () => {
           <p className="text-sm py-4">
             Don't have an account?{" "}
             <Link
-              to="signup"
+              to="/signup"
               className="font-medium text-secondary hover:text-secondary/60"
             >
               Sign Up
