@@ -74,7 +74,7 @@
   --primary: #F6EDDC;
   --primary-foreground: oklch(0.985 0 0);
 
-  --secondary: oklch(0.97 0 0);
+  --secondary: #F37335;
   --secondary-foreground: #777777;
 
   --muted: oklch(0.97 0 0);
@@ -84,9 +84,9 @@
   --accent-foreground: oklch(0.205 0 0);
 
   --destructive: #F01515;
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: #F6EDDC;
+  --input: #F4A261;
+  --ring: #F4A261;
 
   --sidebar: #F6EDDC;
   --sidebar-foreground: #2f2f2f;

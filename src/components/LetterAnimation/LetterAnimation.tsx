@@ -10,7 +10,9 @@ import type { ToneSettings } from "@/types";
 
 export const LetterAnimation: React.FC = () => {
   const [letterContent, setLetterContent] = useState<string>("");
-  const [appState, setAppState] = useState<"input" | "basket" | "envelope">("input");
+  const [appState, setAppState] = useState<"input" | "basket" | "envelope">(
+    "input"
+  );
   const [loading, setLoading] = useState(false);
 
   const handleLetterSubmit = async (prompt: string, settings: ToneSettings) => {
@@ -24,8 +26,8 @@ export const LetterAnimation: React.FC = () => {
       messageLength: settings.messageLength,
       language: settings.language,
       enhancements: settings.enhancements,
-    }
-    
+    };
+
     try {
       const generated = await composeMessage(request);
       setLetterContent(generated);
@@ -46,7 +48,7 @@ export const LetterAnimation: React.FC = () => {
 
   return (
     <motion.div
-      className="flex flex-col justify-center items-center"
+      className="flex flex-col justify-center items-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -116,9 +118,9 @@ export const LetterAnimation: React.FC = () => {
               transition={{ delay: 1.5, duration: 0.5 }}
               className="mt-8 flex justify-center"
             >
-              <Button 
-                onClick={handleReset} 
-                variant="outline" 
+              <Button
+                onClick={handleReset}
+                variant="outline"
                 className="bg-white/80 hover:bg-white border-pink-200 text-accent hover:text-accent/80 hover:border-accent/80"
               >
                 Write Another Letter
@@ -127,6 +129,15 @@ export const LetterAnimation: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <motion.footer
+        className="mt-auto p-6 text-center md:text-sm text-xs text-secondary-foreground"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+      >
+        Create your own magical letter and share it with someone
+      </motion.footer>
     </motion.div>
   );
 };

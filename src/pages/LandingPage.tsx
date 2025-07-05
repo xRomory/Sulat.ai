@@ -1,18 +1,14 @@
 import React from "react";
-import Layout from "@/app/layout";
+import { Navbar } from "@/components/Navbar";
 import { LetterAnimation } from "@/components/LetterAnimation/LetterAnimation";
 
-const LandingPage: React.FC = () => {
-
+export const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen">
-      <div className="px-2">
-        <Layout>
-          <LetterAnimation />
-        </Layout>
+      <Navbar />
+      <div className="relative flex justify-center items-center h-screen">
+        <LetterAnimation />
       </div>
     </div>
   );
 };
-
-export default LandingPage;

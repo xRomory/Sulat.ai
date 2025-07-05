@@ -4,7 +4,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -16,7 +15,6 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-
 import type { ToneSettings, Tone, Occasion, MessageType, Enhancement } from "@/types";
 
 interface ToneSettingsModalProps {
@@ -83,8 +81,7 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
         <div className="p-6 space-y-6">
           <DialogHeader className="p-0 space-y-0.5">
             <div className="flex justify-center items-center">
-              <DialogTitle className="">Tone Settings</DialogTitle>
-              <DialogClose className="h-6 w-6 rounded-full hover:bg-primary-hover inline-flex items-center justify-center"></DialogClose>
+              <DialogTitle>Tone Settings</DialogTitle>
             </div>
           </DialogHeader>
 
