@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { userSchema } from "@/schema/schemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +14,19 @@ import {
 import { MailOpenIcon, KeyIcon, UserIcon } from "lucide-react";
 
 export const SignupForm = () => {
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password:"",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState<{
+    username?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+  }>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSignupSubmit = () => {
     console.log("Submitted");
@@ -41,14 +54,15 @@ export const SignupForm = () => {
               <div className="relative">
                 <Input
                   id="username"
+                  value={formData.username}
                   placeholder="Username"
                   className="pl-10"
                   required
                 />
                 <UserIcon className="h-4 w-4 absolute left-3 top-3" />
               </div>
-              {error && (
-                <p className="text-sm text-destructive font-medium">{error}</p>
+              {error.username && (
+                <p className="text-sm text-destructive font-medium">{error.username}</p>
               )}
             </div>
 
@@ -60,14 +74,15 @@ export const SignupForm = () => {
                 <Input
                   id="email-address"
                   type="email"
+                  value={formData.email}
                   placeholder="doe@email.com"
                   className="pl-10"
                   required
                 />
                 <MailOpenIcon className="h-4 w-4 absolute left-3 top-3" />
               </div>
-              {error && (
-                <p className="text-sm text-destructive font-medium">{error}</p>
+              {error.email && (
+                <p className="text-sm text-destructive font-medium">{error.email}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -75,6 +90,23 @@ export const SignupForm = () => {
               <div className="relative">
                 <Input
                   id="password"
+                  type="password"
+                  placeholder="Password"
+                  className="pl-10"
+                  required
+                />
+                <KeyIcon className="w-4 h-4 absolute left-3 top-3" />
+              </div>
+              <p className="text-xs text-secondary-foreground mt-3">
+                Password must be at least 8 characters long
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <div className="relative">
+                <Input
+                  id="confirm-password"
                   type="password"
                   placeholder="Password"
                   className="pl-10"

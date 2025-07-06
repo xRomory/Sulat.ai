@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, DateTime, Boolean
 from sqlalchemy.orm import relationship
-from backend.database import Base
-from backend.utils import utcnow
+from database import Base
+from utils import utcnow
 import uuid
 
 class User(Base):
@@ -14,5 +14,8 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), default=utcnow)
     
-    saved_messages = relationship("Message", back_populates="user", cascade="all, delete")
-    presets = relationship("MessagePreset", back_populates="user", cascade="all, delete")
+from models.message import Message
+from models.preset import MessagePreset
+
+User.saved_messages = relationship("Message", back_populates="user", cascade="all, delete")
+User.presets = relationship("MessagePreset", back_populates="user", cascade="all, delete")

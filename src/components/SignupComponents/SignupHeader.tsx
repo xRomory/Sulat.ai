@@ -3,7 +3,7 @@ import { MailOpenIcon, HeartIcon } from "lucide-react";
 
 export const SignupHeader = () => {
   return (
-    <div className="text-center mb-8">
+    <div className="text-center mb-2">
       <motion.div
         className="inline-block"
         initial={{ scale: 0.8, opacity: 0 }}

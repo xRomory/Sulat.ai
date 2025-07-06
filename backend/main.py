@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import messages
+from routers import messages, auth
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -13,6 +13,7 @@ app.add_middleware(
 )
 
 app.include_router(messages.router)
+app.include_router(auth.router)
 
 @app.get("/")
 def read_root():
