@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey, DateTime, Text, JSON
 from sqlalchemy.orm import relationship
-from backend.utils import utcnow
-from backend.database import Base
+from utils import utcnow
+from database import Base
 import uuid
 
 class Message(Base):

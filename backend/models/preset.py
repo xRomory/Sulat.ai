@@ -1,14 +1,14 @@
 from sqlalchemy import Column, String, ForeignKey, DateTime, Text, JSON
 from sqlalchemy.orm import relationship
-from backend.utils import utcnow
-from backend.database import Base
+from utils import utcnow
+from database import Base
 import uuid
 
 class MessagePreset(Base):
-    __table__ = "message_presets"
+    __tablename__ = "message_presets"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    user_id = Column(String, ForeignKey("user.id"), nullable=False)
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
     
     preset_name = Column(String, nullable=False)
     
@@ -21,4 +21,4 @@ class MessagePreset(Base):
     
     created_at = Column(DateTime(timezone=True), default=utcnow)
     
-    user = relationship("User", back_populates="saved_messages")
+    user = relationship("User", back_populates="presets")
