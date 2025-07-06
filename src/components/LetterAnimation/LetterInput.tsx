@@ -52,7 +52,7 @@ export const LetterInput: React.FC<LetterInputProps> = ({
           placeholder="What do want to write today?"
           value={letter}
           onChange={(e) => setLetter(e.target.value)}
-          className="w-full border-none p-4 text-sm md:text-lg focus-visible:ring-0 max-h-36 md:min-h-[80px] md:p-6 overflow-y-auto no-scrollbar"
+          className="w-full border-none p-4 text-sm md:text-lg lg:text-base focus-visible:ring-0 max-h-36 md:min-h-[80px] md:p-6 overflow-y-auto no-scrollbar"
         />
         <div className="flex justify-between items-center px-4">
           <Button
@@ -67,7 +67,7 @@ export const LetterInput: React.FC<LetterInputProps> = ({
 
           <Button
             type="submit"
-            className="rounded-full w-7 h-7 md:w-10 md:h-10"
+            className="rounded-full w-7 h-7 md:w-10 md:h-10 hover:bg-secondary/70"
           >
             <SendHorizonal className="text-foreground" />
           </Button>
