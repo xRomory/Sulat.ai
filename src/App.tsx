@@ -7,6 +7,7 @@ import StartMenu from "./pages/StartMenu/StartMenu";
 
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const SignupPage = lazy(() => import("./pages/SignupPage"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"))
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
     element: <StartMenu />
   },
   { path: "/home", element: <LandingPage /> },
+  { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/login", element: <LoginPage /> },
   { path: "/signup", element: <SignupPage /> },
 ])
