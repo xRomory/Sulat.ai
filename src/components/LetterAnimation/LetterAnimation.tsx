@@ -5,7 +5,7 @@ import { LetterInput } from "./LetterInput";
 import { MagicalBasket } from "./MagicalBasket";
 import { MagicalEnvelope } from "./MagicalEnvelope";
 import { Button } from "../ui/button";
-import { composeMessage } from "@/services/api";
+import { messageApi } from "@/services/api";
 import type { ToneSettings } from "@/types";
 
 export const LetterAnimation: React.FC = () => {
@@ -13,10 +13,12 @@ export const LetterAnimation: React.FC = () => {
   const [appState, setAppState] = useState<"input" | "basket" | "envelope">(
     "input"
   );
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleLetterSubmit = async (prompt: string, settings: ToneSettings) => {
     setLoading(true);
+    setError("");
 
     const request = {
       contentIdea: prompt,
@@ -29,13 +31,16 @@ export const LetterAnimation: React.FC = () => {
     };
 
     try {
-      const generated = await composeMessage(request);
-      setLetterContent(generated);
+      const generated = await messageApi.compose(request);
+      setLetterContent(generated.message);
       setLoading(false);
       setAppState("basket");
     } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Failed to generate message"
+      );
+    } finally {
       setLoading(false);
-      console.error("Error generating message:", error);
     }
   };
 
@@ -71,6 +76,19 @@ export const LetterAnimation: React.FC = () => {
               Sulat.ai
             </motion.h1>
             <LetterInput onSubmit={handleLetterSubmit} />
+
+            {error && (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col items-center justify-center min-h-[300px] text-destructive"
+              >
+                {error}
+              </motion.div>
+            )}
           </motion.div>
         )}
 

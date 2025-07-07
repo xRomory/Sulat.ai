@@ -34,12 +34,12 @@ export const LoginForm = () => {
         <CardContent>
           <form onSubmit={handleLoginSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email-address" className="font-medium">
+              <Label htmlFor="email" className="font-medium">
                 Email Address
               </Label>
               <div className="relative">
                 <Input
-                  id="email-address"
+                  id="email"
                   type="email"
                   placeholder="doe@email.com"
                   className="pl-10"
