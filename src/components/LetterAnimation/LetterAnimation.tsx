@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LoadingSpinner from "../utils/LoadingSpinner";
+import LetterLoader from "../utils/LetterLoader";
 import { motion, AnimatePresence } from "framer-motion";
 import { LetterInput } from "./LetterInput";
 import { MagicalBasket } from "./MagicalBasket";
@@ -101,7 +101,7 @@ export const LetterAnimation: React.FC = () => {
             transition={{ duration: 0.3 }}
             className="flex flex-col items-center justify-center min-h-[300px]"
           >
-            <LoadingSpinner />
+            <LetterLoader />
           </motion.div>
         )}
 

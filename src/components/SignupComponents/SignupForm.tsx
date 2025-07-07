@@ -48,7 +48,6 @@ export const SignupForm = () => {
     setLoading(true);
 
     try {
-      console.log("Validating:", formData); //To see what is being validated
       await userSchema.validate(formData, { abortEarly: false });
 
       await signup({

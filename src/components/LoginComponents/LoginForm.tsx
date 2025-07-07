@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -14,10 +15,43 @@ import {
 import { MailOpenIcon, KeyIcon } from "lucide-react";
 
 export const LoginForm = () => {
-  const [error, setError] = useState("");
+  const { login } = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState<string | null>(null);
 
-  const handleLoginSubmit = () => {
-    console.log("Submitted");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+    if (error) setError(null);
+  };
+
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      if (!formData.email || !formData.password) {
+        setError("Please fill in all fields");
+      }
+
+      await login({
+        email: formData.email,
+        password: formData.password,
+      });
+    } catch (errors) {
+      setError(
+        errors instanceof Error
+          ? errors.message
+          : "Login failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,6 +67,12 @@ export const LoginForm = () => {
 
         <CardContent>
           <form onSubmit={handleLoginSubmit} className="space-y-4">
+            {error && (
+              <div className="text-sm text-destructive font-medium text-center">
+                {error}
+              </div>
+            )}
+
             <div className="space-y-2">
               <Label htmlFor="email" className="font-medium">
                 Email Address
@@ -41,15 +81,15 @@ export const LoginForm = () => {
                 <Input
                   id="email"
                   type="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="doe@email.com"
                   className="pl-10"
                   required
+                  disabled={loading}
                 />
                 <MailOpenIcon className="h-4 w-4 absolute left-3 top-3" />
               </div>
-              {error && (
-                <p className="text-sm text-destructive font-medium">{error}</p>
-              )}
             </div>
             <div className="space-y-2">
               <div className="flex justify-between">
@@ -65,9 +105,12 @@ export const LoginForm = () => {
                 <Input
                   id="password"
                   type="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   placeholder="Password"
                   className="pl-10"
                   required
+                  disabled={loading}
                 />
                 <KeyIcon className="w-4 h-4 absolute left-3 top-3" />
               </div>
@@ -82,8 +125,9 @@ export const LoginForm = () => {
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-[#ffd45f] to-secondary hover:from-[#BFA3F3]/60 hover:to-accent font-semibold"
+              disabled={loading}
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </Button>
           </form>
         </CardContent>
@@ -100,7 +144,9 @@ export const LoginForm = () => {
 
           <div className="w-full pt-2 flex items-center">
             <div className="border-t border-accent flex-grow"></div>
-            <span className="px-4 text-xs text-secondary-foreground">or continue with</span>
+            <span className="px-4 text-xs text-secondary-foreground">
+              or continue with
+            </span>
             <div className="border-t border-accent flex-grow"></div>
           </div>
 

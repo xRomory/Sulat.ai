@@ -27,7 +27,9 @@ async function apiFetch<T>(
 
   if(!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.detail || "Request failed");
+    const errorMessage = errorData.detail || 
+      (response.status === 401 ? "Invalid email or password" : "Request failed");
+    throw new Error(errorMessage);
   }
 
   return response.json();
