@@ -1,16 +1,51 @@
-import type { MessageRequest } from "@/types";
+import type { MessageRequest, AuthResponse } from "@/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-export async function composeMessage(request: MessageRequest): Promise<string> {
-  const response = await fetch(`${API_BASE_URL}/compose-message`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(request),
+async function apiFetch<T>(
+  endpoint: string,
+  method: string = "GET",
+  body?: any,
+  requiresAuth: boolean = false,
+): Promise<T> {
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+
+  if(requiresAuth) {
+    const token = localStorage.getItem("token");
+    if(token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+  }
+
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined,
   });
 
-  if(!response.ok) throw new Error("Failed to generate message");
+  if(!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.detail || "Request failed");
+  }
 
-  const data = await response.json()
-  return data.message
+  return response.json();
+}
+
+export const authApi = {
+  signup: (data: {
+    username: string,
+    email: string,
+    password: string,
+  }): Promise<AuthResponse> => apiFetch("/auth/signup", "POST", data),
+
+  login: (data: {
+    email: string,
+    password: string,
+  }): Promise<AuthResponse> => apiFetch("/auth/login", "POST", data),
+};
+
+export const messageApi = {
+  compose: (request: MessageRequest): Promise<{ message: string}> => apiFetch("/compose-message", "POST", request, true),
 };

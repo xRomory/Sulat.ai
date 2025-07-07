@@ -44,3 +44,25 @@ export interface MessageRequest {
 export type ToneSettings = Omit<MessageRequest, "contentIdea"> & {
   messageType: MessageType;
 }
+
+export interface AuthResponse {
+  access_token: string;
+  token_type: string;
+  username: string;
+  email: string;
+  user_id: string;
+  expires_in: number;
+  created_at: string;
+}
+
+export interface AuthContextType {
+  user: { username: string; email: string; } | null;
+  token: string | null;
+  signup: (data: {
+    username: string,
+    email: string,
+    password: string,
+  }) => Promise<void>;
+  login: (data: { email: string; password: string; }) => Promise<void>;
+  logout: () => void;
+}

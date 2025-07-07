@@ -4,6 +4,8 @@ from database import get_db
 from schemas.auth import SignupRequest, LoginRequest, AuthResponse
 from models.users import User
 from services.auth import verify_password, get_password_hash, create_access_token
+from config import settings
+from utils import utcnow
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
     
@@ -20,12 +22,19 @@ def signup(data: SignupRequest, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
     
-    token = create_access_token({"sub": new_user.id})
+    token = create_access_token({
+        "sub": new_user.id,
+        "username": new_user.username,
+        "email": new_user.email,
+    })
     
     return AuthResponse(
         access_token=token,
         username=new_user.username,
         email=new_user.email,
+        user_id=new_user.id,
+        expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+        created_at=utcnow(),
     )
     
 @router.post("/login")
@@ -34,10 +43,24 @@ def login(data: LoginRequest, db: Session = Depends(get_db)):
     if not user or not verify_password(data.password, user.hashed_password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     
-    token = create_access_token({"sub": user.id})
+    token = create_access_token({
+        "sub": user.id,
+        "username": user.username,
+        "email": user.email,
+    })
     
     return AuthResponse(
         access_token=token,
         username=user.username,
         email=user.email,
+        user_id=str(user.id),
+        expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+        created_at=utcnow(),
     )
+    
+# Deletion of test data (Will deleted once api is connected to frontend)
+@router.delete("/delete-test-data")
+def delete_test_users(db: Session = Depends(get_db)):
+    deleted = db.query(User).filter(User.email.like("%@example.com")).delete(synchronize_session=False)
+    db.commit()
+    return {"deleted_count": deleted}

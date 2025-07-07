@@ -1,6 +1,8 @@
 import { useState } from "react";
+import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
 import { userSchema } from "@/schema/schemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,10 +16,11 @@ import {
 import { MailOpenIcon, KeyIcon, UserIcon } from "lucide-react";
 
 export const SignupForm = () => {
+  const { signup } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    password:"",
+    password: "",
     confirmPassword: "",
   });
   const [error, setError] = useState<{
@@ -25,11 +28,56 @@ export const SignupForm = () => {
     email?: string;
     password?: string;
     confirmPassword?: string;
+    api?: string;
   }>({});
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSignupSubmit = () => {
-    console.log("Submitted");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+
+    //Clear error when user types
+    if (error[id as keyof typeof error]) {
+      setError((prev) => ({ ...prev, [id]: undefined }));
+    }
+  };
+
+  const handleSignupSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError({});
+    setLoading(true);
+
+    try {
+      console.log("Validating:", formData); //To see what is being validated
+      await userSchema.validate(formData, { abortEarly: false });
+
+      await signup({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (err) {
+      if (err instanceof yup.ValidationError) {
+        const newError: typeof error = {};
+        err.inner.forEach((errors) => {
+          if (errors.path) newError[errors.path as keyof typeof newError] = errors.message;
+        });
+        setError(newError);
+      } else {
+        setError({
+          api: err instanceof Error ? err.message : "Signup failed. Please try again",
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,6 +95,12 @@ export const SignupForm = () => {
 
         <CardContent>
           <form onSubmit={handleSignupSubmit} className="space-y-4">
+            {error.api && (
+              <div className="text-sm text-destructive font-medium text-center">
+                {error.api}
+              </div>
+            )}
+
             <div className="space-y-2">
               <Label htmlFor="username" className="font-medium">
                 Username
@@ -55,34 +109,42 @@ export const SignupForm = () => {
                 <Input
                   id="username"
                   value={formData.username}
+                  onChange={handleChange}
                   placeholder="Username"
                   className="pl-10"
                   required
+                  disabled={loading}
                 />
                 <UserIcon className="h-4 w-4 absolute left-3 top-3" />
               </div>
               {error.username && (
-                <p className="text-sm text-destructive font-medium">{error.username}</p>
+                <p className="text-sm text-destructive font-medium">
+                  {error.username}
+                </p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email-address" className="font-medium">
+              <Label htmlFor="email" className="font-medium">
                 Email Address
               </Label>
               <div className="relative">
                 <Input
-                  id="email-address"
+                  id="email"
                   type="email"
                   value={formData.email}
+                  onChange={handleChange}
                   placeholder="doe@email.com"
                   className="pl-10"
                   required
+                  disabled={loading}
                 />
                 <MailOpenIcon className="h-4 w-4 absolute left-3 top-3" />
               </div>
               {error.email && (
-                <p className="text-sm text-destructive font-medium">{error.email}</p>
+                <p className="text-sm text-destructive font-medium">
+                  {error.email}
+                </p>
               )}
             </div>
             <div className="space-y-2">
@@ -91,39 +153,50 @@ export const SignupForm = () => {
                 <Input
                   id="password"
                   type="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   placeholder="Password"
                   className="pl-10"
                   required
+                  disabled={loading}
                 />
                 <KeyIcon className="w-4 h-4 absolute left-3 top-3" />
               </div>
-              <p className="text-xs text-secondary-foreground mt-3">
-                Password must be at least 8 characters long
-              </p>
+              {error.password ? (
+                <p className="text-sm text-destructive font-medium">{error.password}</p>
+              ) : (
+                <p className="text-xs text-secondary-foreground mt-3">
+                  Password must be at least 8 characters long
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="relative">
                 <Input
-                  id="confirm-password"
+                  id="confirmPassword"
                   type="password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
                   placeholder="Password"
                   className="pl-10"
                   required
+                  disabled={loading}
                 />
                 <KeyIcon className="w-4 h-4 absolute left-3 top-3" />
               </div>
-              <p className="text-xs text-secondary-foreground mt-3">
-                Password must be at least 8 characters long
-              </p>
+              {error.confirmPassword && (
+                <p className="text-sm text-destructive font-medium">{error.confirmPassword}</p>
+              )}
             </div>
 
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-[#ffd45f] to-secondary hover:from-[#BFA3F3]/60 hover:to-accent font-semibold"
+              disabled={loading}
             >
-              Sign Up
+              {loading ? "Signing up..." : "Sign Up"}
             </Button>
           </form>
         </CardContent>

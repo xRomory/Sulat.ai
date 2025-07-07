@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from datetime import datetime
 
 #------------- Schemas -------------
 class SignupRequest(BaseModel):
@@ -15,3 +16,11 @@ class AuthResponse(BaseModel):
     token_type: str = "bearer"
     username: str
     email: str
+    user_id: str
+    expires_in: int
+    created_at: datetime
+    
+    class Config:
+        json_encoders = {
+            datetime: lambda v: v.isoformat()
+        }
