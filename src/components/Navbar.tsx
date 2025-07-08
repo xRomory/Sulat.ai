@@ -32,11 +32,9 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="bg-transparent py-4 px-6 fixed top-0 w-full z-10">
+    <nav className="bg-transparent py-4 px-6">
       <header className="flex justify-between items-center">
-        {user && (
-          <div className="font-dm-serif-display text-3xl">Sulat.ai</div>
-        )}
+        <div className="font-dm-serif-display text-3xl">Sulat.ai</div>
         <div className="space-x-4">
           <div className="space-x-3 md:space-x-4 flex items-center">
             {!user ? (
@@ -65,10 +63,14 @@ export const Navbar = () => {
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-sidebar" align="end" forceMount>
+                <DropdownMenuContent
+                  className="w-56 bg-sidebar"
+                  align="end"
+                  forceMount
+                >
                   <DropdownMenuItem className="flex flex-col items-start">
                     <div className="text-sm font-medium">{user.username}</div>
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-secondary-foreground">
                       {user.email}
                     </div>
                   </DropdownMenuItem>
@@ -94,7 +96,7 @@ export const Navbar = () => {
                   </Button>
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent align="end">
                 <p className="text-foreground font-medium">About Sulat.ai</p>
               </TooltipContent>
             </Tooltip>
