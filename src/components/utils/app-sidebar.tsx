@@ -1,5 +1,4 @@
 import { PenLine, Search } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -26,8 +25,9 @@ const items = [
 ];
 
 export function AppSidebar() {
+
   return (
-    <Sidebar>
+    <Sidebar className="fixed h-screen">
       <SidebarContent className="px-2 py-2 shadow-sm">
         <SidebarGroup>
           <div className="mb-8">
