@@ -1,11 +1,12 @@
-from datetime import datetime, timezone
-import re
-
 # UTCnow 
+from datetime import datetime, timezone
+
 def utcnow():
     return datetime.now(timezone.utc)
 
 #---------- Out of Scope Context for User Prompt ----------
+import re
+
 QUESTION_PATTERNS = [
     r"^what\s", r"^how\s", r"^who\s", r"^when\s", r"^why\s", r"^where\s",
     r"^give me", r"^tell me", r"^define", r"^translate",

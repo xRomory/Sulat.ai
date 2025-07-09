@@ -18,4 +18,4 @@ from models.message import Message
 from models.preset import MessagePreset
 
 User.saved_messages = relationship("Message", back_populates="user", cascade="all, delete")
-User.presets = relationship("MessagePreset", back_populates="user", cascade="all, delete")
+User.presets = relationship("MessagePreset", back_populates="user", cascade="all, delete-orphan")

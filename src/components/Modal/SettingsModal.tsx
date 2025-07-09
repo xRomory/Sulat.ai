@@ -15,7 +15,14 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { ToneSettings, Tone, Occasion, MessageType, Enhancement } from "@/types";
+import type {
+  ToneSettings,
+  Tone,
+  Occasion,
+  MessageType,
+  Enhancement,
+} from "@/types";
+import { Button } from "../ui/button";
 
 interface ToneSettingsModalProps {
   open: boolean;
@@ -52,10 +59,16 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
     onSettingsChange({ ...settings, occasion: value as Occasion });
 
   const handleMessageLengthChange = (value: string) =>
-    onSettingsChange({ ...settings, messageLength: value as "short" | "medium" | "long" });
+    onSettingsChange({
+      ...settings,
+      messageLength: value as "short" | "medium" | "long",
+    });
 
   const handleLanguageChange = (value: string) =>
-    onSettingsChange({ ...settings, language: value as "english" | "filipino" | "taglish" });
+    onSettingsChange({
+      ...settings,
+      language: value as "english" | "filipino" | "taglish",
+    });
 
   const handleEnhancementToggle = (value: string) => {
     const currentEnhancements = [...settings.enhancements];
@@ -247,7 +260,9 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
                   <Checkbox
                     id="tone-warm"
                     checked={settings.toneStyles.includes("warm and gentle")}
-                    onCheckedChange={() => handleToneStyleToggle("warm and gentle")}
+                    onCheckedChange={() =>
+                      handleToneStyleToggle("warm and gentle")
+                    }
                   />
                   <Label htmlFor="tone-warm" className="text-sm font-normal">
                     Warm and Gentle
@@ -290,9 +305,7 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
                   <Checkbox
                     id="tone-professional"
                     checked={settings.toneStyles.includes("formal")}
-                    onCheckedChange={() =>
-                      handleToneStyleToggle("formal")
-                    }
+                    onCheckedChange={() => handleToneStyleToggle("formal")}
                   />
                   <Label
                     htmlFor="tone-professional"
@@ -321,7 +334,9 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
                     <SelectItem value="none">Normal Days</SelectItem>
                     <SelectItem value="birthday">Birthday</SelectItem>
                     <SelectItem value="anniversary">Anniversary</SelectItem>
-                    <SelectItem value="valentine's day">Valentine's Day</SelectItem>
+                    <SelectItem value="valentine's day">
+                      Valentine's Day
+                    </SelectItem>
                     <SelectItem value="new year">New Year</SelectItem>
                     <SelectItem value="christmas">Christmas</SelectItem>
                     <SelectItem value="mother's day">Mother's Day</SelectItem>
@@ -433,8 +448,11 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
                     Make it heartfelt
                   </Label>
                 </div>
-
               </div>
+            </div>
+
+            <div className="space-y-3 flex justify-center">
+              <Button>Save Preset</Button>
             </div>
           </div>
         </div>
