@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, ForeignKey, DateTime, Text, JSON
+from sqlalchemy import Column, String, ForeignKey, DateTime, JSON
 from sqlalchemy.orm import relationship
 from utils import utcnow
 from database import Base
