@@ -1,3 +1,4 @@
+// --- Tone Settings ---
 export type MessageType =
   | "good-morning"
   | "comfort"
@@ -45,6 +46,14 @@ export type ToneSettings = Omit<MessageRequest, "contentIdea"> & {
   messageType: MessageType;
 }
 
+// --- Tone Presets ---
+export interface TonePreset {
+  id: string;
+  name: string;
+  settings: ToneSettings;
+}
+
+// --- User Type ---
 export interface AuthResponse {
   access_token: string;
   token_type: string;
