@@ -18,12 +18,14 @@ import type {
   Enhancement,
 } from "@/types";
 
+
 interface ToneSettingsProps {
   settings: ToneSettings;
   onSettingsChange: (settings: ToneSettings) => void;
 }
 
 export const ToneSetting: React.FC<ToneSettingsProps> = ({ settings, onSettingsChange }) => {
+
   const handleMessageTypeChange = (value: string) =>
     onSettingsChange({ ...settings, messageType: value as MessageType });
 
