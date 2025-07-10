@@ -97,8 +97,8 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
     const idToDelete = presetToDelete.id
 
     try {
-      await presetApi.deletePreset(idToDelete);
       setPresets((prev) => prev.filter((preset) => preset.id !== idToDelete));
+      await presetApi.deletePreset(idToDelete);
     } catch (error) {
       console.error("Failed to delete preset:", error);
     } finally {
@@ -245,9 +245,7 @@ export const SettingsModal: React.FC<ToneSettingsModalProps> = ({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction 
-              onClick={() => {
-              deletePreset
-              }} 
+              onClick={deletePreset}
               className="bg-destructive hover:bg-red-500"
             >
               Delete
