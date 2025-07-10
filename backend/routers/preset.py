@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from typing import List
 from models.preset import MessagePreset
 from models.users import User
 from schemas.preset import MessagePresetCreate, MessagePresetOut, MessagePresetUpdate
@@ -7,6 +8,10 @@ from database import get_db
 from dependencies import get_current_user
 
 router = APIRouter(prefix="/presets", tags=["Presets"])
+
+@router.get("/", response_model=List[MessagePresetOut])
+def list_presets(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    return db.query(MessagePreset).filter_by(user_id=user.id).all()
 
 @router.post("/", response_model=MessagePresetOut)
 def create_preset(preset: MessagePresetCreate, db: Session = Depends(get_db), user: User = Depends(get_current_user)):

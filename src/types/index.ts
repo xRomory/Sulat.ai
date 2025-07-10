@@ -49,8 +49,13 @@ export type ToneSettings = Omit<MessageRequest, "contentIdea"> & {
 // --- Tone Presets ---
 export interface TonePreset {
   id: string;
-  name: string;
-  settings: ToneSettings;
+  preset_name: string;
+  message_type: MessageType;
+  tone_styles: Tone[];
+  occasion: Occasion;
+  message_length: "short" | "medium" | "long";
+  language: "english" | "filipino" | "taglish"
+  enhancements: Record<string, boolean>;
 }
 
 // --- User Type ---
