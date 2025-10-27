@@ -1,11 +1,11 @@
-# ✨ Sulat.ai ✨  
+# Sulat.ai
 **_AI-Powered Letter Writing Companion_**
 
 Sulat.ai is a simple but meaningful AI-powered web application designed specifically for **writing thoughtful, creative, and personal letters** — not chatting. Unlike general-purpose AI assistants like ChatGPT or DeepSeek, Sulat.ai is focused solely on **composing messages and letters**, with built-in settings to guide tone, language, and occasion.
 
 ---
 
-## 🧠 Why Sulat.ai?
+## Why Sulat.ai?
 
 Sometimes we know exactly what we want to say to someone — but we can't quite put it into words. Or maybe we want to be creative and expressive, but language barriers or emotional blocks get in the way.
 
@@ -16,7 +16,7 @@ This project was born out of a personal need:
 
 ---
 
-## 💡 What Makes Sulat.ai Different?
+## What Makes Sulat.ai Different?
 
 Other AI tools require long and detailed prompts. You need to tell them what tone to use, how long the message should be, and hope it understands the occasion.  
 **Sulat.ai flips that around.**  
@@ -24,7 +24,7 @@ You just choose from intuitive options, and the app crafts the message for you.
 
 ---
 
-## 🎯 Purpose
+## Purpose
 
 - Break **language barriers** — especially for users who want to write in **English**, **Filipino**, or a mix (**Taglish**).
 - Help people who:
@@ -34,47 +34,43 @@ You just choose from intuitive options, and the app crafts the message for you.
 
 ---
 
-## 🔧 Core Feature: Smart Letter Customization
+## Core Feature: Smart Letter Customization
 
 Users can set the **tone and structure** of their letter with:
 
-- ✍️ **Message Type** (e.g., Good Morning, Romantic, Comforting, Professional)
-- 🎨 **Tone Styles** (Romantic, Sincere, Poetic, Witty, Casual, etc.)
-- 📅 **Occasion** (Birthday, Anniversary, Valentine's Day, etc.)
-- 🗣️ **Language** (`English`, `Filipino`, or `Taglish`)
-- 📏 **Message Length** (`Short`, `Medium`, or `Long`)
-- 💖 **Enhancements** (Add a quote, make it poetic, heartfelt, or humorous)
-- 🌈 **Visually Appealing UI** with dark mode and theming
+- **Message Type** (e.g., Good Morning, Romantic, Comforting, Professional)
+- **Tone Styles** (Romantic, Sincere, Poetic, Witty, Casual, etc.)
+- **Occasion** (Birthday, Anniversary, Valentine's Day, etc.)
+- **Language** (`English`, `Filipino`, or `Taglish`)
+- **Message Length** (`Short`, `Medium`, or `Long`)
+- **Enhancements** (Add a quote, make it poetic, heartfelt, or humorous)
+- **Visually Appealing UI** with dark mode and theming
 
 ---
 
-## 🧪 Tech Stack
+## Tech Stack
 
 | Layer        | Tech                          |
 |--------------|-------------------------------|
-| 💻 Frontend   | **ReactJS + TypeScript**       |
-| 🎨 Styling    | **Tailwind CSS v4**            |
-| ⚙️ Backend    | **FastAPI (Python)**           |
-| 🧠 AI Model   | **Gemini 2.0 Flash** via Gemini API |
-| 🗄️ Database   | **PostgreSQL**                 |
-| 📦 API Client | `httpx` + `python-dotenv`      |
-| 🌐 Environment | Vite + `.env` config           |
+| Frontend   | **ReactJS + TypeScript**       |
+| Styling    | **Tailwind CSS v4**            |
+| Backend    | **FastAPI (Python)**           |
+| AI Model   | **Gemini 2.0 Flash** via Gemini API |
+| Database   | **PostgreSQL**                 |
+| API Client | `httpx` + `python-dotenv`      |
+| Environment | Vite + `.env` config           |
 
 ---
 
-## 🚧 Status
-
-Sulat.ai is currently in **active development**. More features, polish, and deployment info coming soon.
-
 ---
 
-## 🤝 Contributions
+## Contributions
 
 This project is both personal and open for growth. If you're passionate about AI, creative writing, or frontend/backend dev — feel free to contribute or reach out.
 
 ---
 
-## 📘 License
+## License
 
 This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** License.
 
