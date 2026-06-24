@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from routers import messages, auth, preset
 from fastapi.middleware.cors import CORSMiddleware
+from routers import messages, auth, preset
 
 app = FastAPI()
 

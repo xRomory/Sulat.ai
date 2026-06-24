@@ -1,11 +1,12 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
-from database import get_db
+from datetime import timedelta, datetime, timezone
+from utils.security import get_password_hash, verify_password
+from ..utils.jwt import create_access_token
+from db.database import get_db
 from schemas.auth import SignupRequest, LoginRequest, AuthResponse
-from models.users import User
-from services.auth import verify_password, get_password_hash, create_access_token
+from models.users import User, UserAuth
 from config import settings
-from utils import utcnow
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
     
@@ -26,15 +27,13 @@ def signup(data: SignupRequest, db: Session = Depends(get_db)):
         "sub": new_user.id,
         "username": new_user.username,
         "email": new_user.email,
-    })
+    }, expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES))
     
-    return AuthResponse(
+    return UserAuth(
         access_token=token,
         username=new_user.username,
         email=new_user.email,
         user_id=new_user.id,
-        expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
-        created_at=utcnow(),
     )
     
 @router.post("/login")
@@ -55,10 +54,10 @@ def login(data: LoginRequest, db: Session = Depends(get_db)):
         email=user.email,
         user_id=str(user.id),
         expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
-        created_at=utcnow(),
+        created_at=datetime.now(timezone.utc),
     )
     
-# Deletion of test data (Will deleted once api is connected to frontend)
+# Deletion of test data (Will delete once api is connected to frontend)
 @router.delete("/delete-test-data")
 def delete_test_users(db: Session = Depends(get_db)):
     deleted = db.query(User).filter(User.email.like("%@example.com")).delete(synchronize_session=False)
