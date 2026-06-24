@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey, DateTime, JSON
 from sqlalchemy.orm import relationship
-from utils import utcnow
-from db.database import Base
+from backend.utils import utcnow
+from backend.db.database import Base
 import uuid
 
 class MessagePreset(Base):

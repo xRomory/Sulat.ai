@@ -1,7 +1,7 @@
 from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
-from models.users import User
+from backend.models.users import User
 
 class UserNotFoundException(Exception):
     ...
@@ -20,12 +20,12 @@ class UserDatabase:
         self,
         username: str,
         email: str,
-        hashed_password: str
+        password: str
     ) -> User:
         user = User(
-            username,
-            email,
-            hashed_password
+            username=username,
+            email=email,
+            hashed_password=password,
         )
         
         self.db.add(user)

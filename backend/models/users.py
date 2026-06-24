@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import Column, String, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from ..db.database import Base
-from utils import utcnow
+from backend.utils import utcnow
 from uuid import UUID, uuid4
 
 class User(Base):
@@ -15,8 +15,8 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), default=utcnow)
     
-from models.message import Message
-from models.preset import MessagePreset
+from backend.models.message import Message
+from backend.models.preset import MessagePreset
 
 User.saved_messages = relationship("Message", back_populates="user", cascade="all, delete")
 User.presets = relationship("MessagePreset", back_populates="user", cascade="all, delete-orphan")
