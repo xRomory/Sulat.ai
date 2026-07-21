@@ -1,12 +1,6 @@
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL not set in environment variables.")
-
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -14,8 +8,14 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from database import Base
+from db.database import Base
 from models import User, Message, MessagePreset
+
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL not set in environment variables.")
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

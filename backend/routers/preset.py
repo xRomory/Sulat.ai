@@ -4,8 +4,8 @@ from typing import List
 from models.preset import MessagePreset
 from models.users import User
 from schemas.preset import MessagePresetCreate, MessagePresetOut, MessagePresetUpdate
-from database import get_db
-from dependencies import get_current_user
+from db.database import get_db
+from core.dependencies import get_current_user
 
 router = APIRouter(prefix="/presets", tags=["Presets"])
 
