@@ -1,7 +1,7 @@
 from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
-from backend.models.users import User
+from models.users import User
 
 class UserNotFoundException(Exception):
     ...

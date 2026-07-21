@@ -5,8 +5,8 @@ def test_get_db_yields_session_and_closes():
     mock_session = MagicMock()
     mock_session_local = MagicMock(return_value=mock_session)
     
-    with patch("backend.db.database.SessionLocal", mock_session_local):
-        from backend.db.database import get_db
+    with patch("db.database.SessionLocal", mock_session_local):
+        from db.database import get_db
         
         generate = get_db()
         db = next(generate)
@@ -22,8 +22,8 @@ def test_get_db_closes_session_on_exception():
     mock_session = MagicMock()
     mock_session_local = MagicMock(return_value=mock_session)
     
-    with patch("backend.db.database.SessionLocal", mock_session_local):
-        from backend.db.database import get_db
+    with patch("db.database.SessionLocal", mock_session_local):
+        from db.database import get_db
     
         generate = get_db()
         next(generate)
