@@ -1,20 +1,46 @@
-from pydantic import BaseModel, Field
-from sqlalchemy import Column, String, DateTime, Boolean
-from sqlalchemy.orm import relationship
-from sqlalchemy.dialects.postgresql import UUID
+from pydantic import BaseModel, Field, EmailStr
+from datetime import datetime
+from sqlalchemy import String, DateTime, Boolean
+from sqlalchemy.orm import relationship, Mapped, mapped_column
+from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from db.database import Base
-from utils import utcnow
-from uuid import uuid4, UUID as uuid
+from utils.prompts import utcnow
+from uuid import uuid4, UUID
 
 class User(Base):
     __tablename__ = "users"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-    email = Column(String, unique=True, nullable=False)
-    hashed_password = Column(String, nullable=False)
-    username = Column(String, nullable=False)
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime(timezone=True), default=utcnow)
+    id: Mapped[UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid4
+    )
+    
+    email: Mapped[str] = mapped_column(
+        String,
+        unique=True,
+        nullable=False
+    )
+    
+    hashed_password: Mapped[str] = mapped_column(
+        String,
+        nullable=False
+    )
+    
+    username: Mapped[str] = mapped_column(
+        String,
+        nullable=False
+    )
+    
+    is_active: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True
+    )
+    
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=utcnow
+    )
     
     saved_messages = relationship(
         "Message",
@@ -40,9 +66,15 @@ class User(Base):
 #     cascade="all, delete-orphan"
 # )
 
-class UserAuth(BaseModel):
+class UsersAuth(BaseModel):
     access_token: str = Field(...)
     token_type: str = Field(default="bearer", description="Token type")
-    user_id: uuid = Field(...)
+    user_id: UUID = Field(...)
     username: str = Field(...)
     email: str = Field(...)
+
+class Users(BaseModel):
+    user_id: UUID = Field(...)
+    username: str = Field(..., min_length=1, max_length=100)
+    email: EmailStr = Field(..., min_length=1, max_length=100)
+    password: str = Field(..., min_length=1, max_length=250)

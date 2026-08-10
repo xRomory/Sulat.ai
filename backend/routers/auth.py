@@ -2,10 +2,10 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 from datetime import timedelta, datetime, timezone
 from utils.security import get_password_hash, verify_password
-from ..utils.jwt import create_access_token
+from utils.jwt import create_access_token
 from db.database import get_db
-from schemas.auth import SignupRequest, LoginRequest, AuthResponse
-from models.users import User, UserAuth
+from schemas.auth import SignupRequest, LoginRequest, UsersAuth
+from models.users import User, UsersAuth
 from config import settings
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
@@ -29,7 +29,7 @@ def signup(data: SignupRequest, db: Session = Depends(get_db)):
         "email": new_user.email,
     }, expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES))
     
-    return UserAuth(
+    return UsersAuth(
         access_token=token,
         username=new_user.username,
         email=new_user.email,

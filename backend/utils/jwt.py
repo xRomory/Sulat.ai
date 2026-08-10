@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta, timezone
 from typing import Optional, Any
 from fastapi import HTTPException, status
-from jose import ExpiredSignatureError, JWTError, jwt
-from ..config import JWT_SECRET_KEY
-from ..models.users import User
+from jose import JWTError, jwt
+from config import JWT_SECRET_KEY
+from models.users import User
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
