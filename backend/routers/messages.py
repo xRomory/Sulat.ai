@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from services.gemini_api import generate_message
-from utils import is_out_of_scope
+from utils.prompts import is_out_of_scope
 from schemas.message import ComposeRequest
 
 router = APIRouter()

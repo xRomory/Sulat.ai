@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from datetime import datetime
+from uuid import UUID
 
 #------------- Schemas -------------
 class SignupRequest(BaseModel):
@@ -11,16 +11,9 @@ class LoginRequest(BaseModel):
     email: EmailStr
     password: str
     
-class AuthResponse(BaseModel):
+class UsersAuth(BaseModel):
     access_token: str
     token_type: str = "bearer"
     username: str
-    email: str
-    user_id: str
-    expires_in: int
-    created_at: datetime
-    
-    class Config:
-        json_encoders = {
-            datetime: lambda v: v.isoformat()
-        }
+    email: EmailStr
+    user_id: UUID

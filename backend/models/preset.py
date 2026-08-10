@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, ForeignKey, DateTime, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from db.database import Base
-from utils import utcnow
+from utils.prompts import utcnow
 from uuid import uuid4
 
 class MessagePreset(Base):
