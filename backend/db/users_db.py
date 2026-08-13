@@ -2,6 +2,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from models.users import User
+from uuid import UUID as uuid
 
 class UserNotFoundException(Exception):
     ...
@@ -17,17 +18,8 @@ class UserDatabase:
             raise RuntimeError(f"Database initialization failed: {e}")
     
     def create(
-        self,
-        username: str,
-        email: str,
-        password: str
+        self, user: User
     ) -> User:
-        user = User(
-            username=username,
-            email=email,
-            hashed_password=password,
-        )
-        
         self.db.add(user)
         
         try:
@@ -40,23 +32,29 @@ class UserDatabase:
         except SQLAlchemyError as e:
             raise RuntimeError(f"Failed to create user: {e}")
     
-    def get_by_id(self, user_id: str) -> User:
+    def get_by_user_id(self, user_id: uuid) -> User:
         try:
-            return self.db.query(User).filter(User.id == user_id).first()
+            existing_user = self.db.query(User).filter(User.id == user_id).first()
+            if not existing_user:
+                raise UserNotFoundException(f"User ID: {user_id} not found")
+            return existing_user
         except SQLAlchemyError as e:
             raise RuntimeError(f"Failed to get user's id: {e}")
     
     def get_by_email(self, email: str) -> User:
         try:
-            return self.db.query(User).filter(User.email == email).first()
+            existing_email = self.db.query(User).filter(User.email == email).first()
+            if not existing_email:
+                raise UserNotFoundException(f"Email: {email} not found")
+            return existing_email
         except SQLAlchemyError as e:
             raise RuntimeError(f"Failed to get user's email: {e}")
     
     def list_all(self) -> List[User]:
         return self.db.query(User).all()
     
-    def delete(self, user_id: str) -> bool:
-        user = self.get_by_id(user_id)
+    def delete(self, user_id: uuid) -> bool:
+        user = self.get_by_user_id(user_id)
         if not user:
             raise UserNotFoundException("User not found.")
         
