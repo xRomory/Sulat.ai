@@ -54,27 +54,19 @@ class User(Base):
         cascade="all, delete-orphan"
     )
 
-# User.saved_messages = relationship(
-#     Message,
-#     back_populates="user",
-#     cascade="all, delete"
-# )
-
-# User.presets = relationship(
-#     MessagePreset,
-#     back_populates="user",
-#     cascade="all, delete-orphan"
-# )
-
-class UsersAuth(BaseModel):
+class UserAuthResponse(BaseModel):
     access_token: str = Field(...)
     token_type: str = Field(default="bearer", description="Token type")
     user_id: UUID = Field(...)
     username: str = Field(...)
     email: str = Field(...)
 
-class Users(BaseModel):
+class UserResponse(BaseModel):
     user_id: UUID = Field(...)
     username: str = Field(..., min_length=1, max_length=100)
     email: EmailStr = Field(..., min_length=1, max_length=100)
-    password: str = Field(..., min_length=1, max_length=250)
+
+class UserCreate(BaseModel):
+    username: str = Field(..., min_length=1, max_length=100)
+    email: EmailStr
+    password: str = Field(..., min_length=1, max_length=100)

@@ -10,7 +10,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 class Settings(BaseSettings):
-    # SECRET_KEY: str = Field(default=..., validation_alias="SECRET_KEY")
+    # JWT_SECRET_KEY: str = Field(default=..., validation_alias=JWT_SECRET_KEY)
     
     # DATABASE_URL: str = Field(..., validation_alias="DATABASE_URL")
     # GEMINI_API_KEY: str = Field(..., validation_alias="GEMINI_API_KEY")
