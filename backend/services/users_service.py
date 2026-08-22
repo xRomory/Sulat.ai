@@ -11,20 +11,17 @@ class UserService:
         self.user_db = UserDatabase(db)
         
     def signup(self, user_data: UserCreate) -> User:
-        try:
-            existing_user = self.user_db.get_by_email(user_data.email)
-            if existing_user:
-                raise ValueError("Email already exists.")
-        except UserNotFoundException:
-            ...
+        existing_user = self.user_db.get_by_email(user_data.email)
+        if existing_user:
+            raise ValueError("Email already exists.")
         
         hashed_password = get_password_hash(user_data.password)
         
-        new_user = self.user_db.create(
+        new_user = self.user_db.create(User(
             username=user_data.username,
             email=user_data.email,
             password=hashed_password
-        )
+        ))
         
         return new_user
     
@@ -38,6 +35,7 @@ class UserService:
             raise ValueError("Invalid email or password")
         
         token = create_access_token(user)
+        
         return UserAuthResponse(
             access_token=token,
             token_type="bearer",

@@ -21,7 +21,7 @@ def test_create_user(mock_session: MagicMock):
     
     assert result.username == user.username
     assert result.email == user.email
-    assert result.hashed_password == user.hashed_password
+    assert result.password == user.password
     
     mock_session.add.assert_called_once()
     
@@ -29,7 +29,7 @@ def test_create_user(mock_session: MagicMock):
     
     assert created_user.username == user.username
     assert created_user.email == user.email
-    assert created_user.hashed_password == user.hashed_password
+    assert created_user.password == user.password
     
     mock_session.commit.assert_called_once()
     mock_session.refresh.assert_called_once_with(created_user)
@@ -111,12 +111,12 @@ def create_user(
     id = uuid4(),
     username: str = "Test User",
     email: str = "testuser@example.com",
-    hashed_password: str = "password123"
+    password: str = "password123"
 ) -> User:
     
     return User(
         id=id,
         username=username,
         email=email,
-        hashed_password=hashed_password
+        password=password
     )
