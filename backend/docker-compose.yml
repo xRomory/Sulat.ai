@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16
+    image: postgres:16-alpine
     ports:
       - "${DB_PORT}:5432"
     environment:
