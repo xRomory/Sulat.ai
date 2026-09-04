@@ -2,10 +2,11 @@ import pytest
 from sqlalchemy.orm import Session
 from unittest.mock import Mock, patch
 from pydantic import EmailStr
-from models.users import UserCreate, User
+from models.users import User
+from schemas.users import UserCreate
 from db.users_db import UserNotFoundException
 from services.users_service import UserService
-from schemas.auth import LoginRequest
+from backend.schemas.users import LoginRequest
 from utils.security import get_password_hash
 from uuid import uuid4
 
@@ -26,7 +27,7 @@ def user_service(mock_db_session):
         yield service
 
 def test_signup_success(user_service):
-    user_service.user_db.get_by_email.return_value = None
+    user_service.user_db.get_by_email.side_effect = UserNotFoundException()
     
     created_user = created_user_data()
     created_user.password = get_password_hash(created_user.password)
@@ -72,7 +73,7 @@ def test_signup_hash_failure_does_not_create(user_service):
         user_service.user_db.create.assert_not_called()
 
 def test_login_user_success(user_service):
-    user_service.user_db.get_by_email.return_value = None
+    user_service.user_db.get_by_email.side_effect = UserNotFoundException()
     
     # Create a user, hash the password, query it
     created_user = created_user_data()
@@ -83,6 +84,7 @@ def test_login_user_success(user_service):
     signup_user=user_service.signup(created_user)
     
     # User now exists in DB
+    user_service.user_db.get_by_email.side_effect = None
     user_service.user_db.get_by_email.return_value = signup_user
     
     # User login with their credentials

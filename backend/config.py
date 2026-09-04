@@ -8,6 +8,8 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+CORS_ORIGIN = os.getenv("CORS_ORIGINS", "")
+ALLOW_ORIGINS = [origin.strip() for origin in CORS_ORIGIN.split(",") if origin.strip()]
 
 class Settings(BaseSettings):
     # JWT_SECRET_KEY: str = Field(default=..., validation_alias=JWT_SECRET_KEY)

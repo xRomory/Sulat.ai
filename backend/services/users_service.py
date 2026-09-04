@@ -1,8 +1,9 @@
 from fastapi import Depends
 from db.users_db import UserDatabase, UserNotFoundException
 from sqlalchemy.orm import Session
-from schemas.auth import LoginRequest
-from models.users import UserCreate, UserAuthResponse, User
+from backend.schemas.users import LoginRequest
+from models.users import User
+from schemas.users import UserCreate, UserAuthResponse
 from utils.security import get_password_hash, verify_password
 from utils.jwt import create_access_token
 
@@ -11,9 +12,11 @@ class UserService:
         self.user_db = UserDatabase(db)
         
     def signup(self, user_data: UserCreate) -> User:
-        existing_user = self.user_db.get_by_email(user_data.email)
-        if existing_user:
+        try:
+            self.user_db.get_by_email(user_data.email)
             raise ValueError("Email already exists.")
+        except UserNotFoundException:
+            ...
         
         hashed_password = get_password_hash(user_data.password)
         
@@ -31,7 +34,7 @@ class UserService:
         except UserNotFoundException:
             raise ValueError("Invalid email or password")
         
-        if not verify_password(user_credentials.password, getattr(user, "password", "")):
+        if not verify_password(user_credentials.password, user.password):
             raise ValueError("Invalid email or password")
         
         token = create_access_token(user)
