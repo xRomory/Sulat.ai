@@ -1,7 +1,7 @@
 from fastapi import Depends
 from db.users_db import UserDatabase, UserNotFoundException
 from sqlalchemy.orm import Session
-from backend.schemas.users import LoginRequest
+from schemas.users import LoginRequest
 from models.users import User
 from schemas.users import UserCreate, UserAuthResponse
 from utils.security import get_password_hash, verify_password
