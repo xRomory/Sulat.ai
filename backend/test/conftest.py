@@ -8,7 +8,7 @@ TEST_DATABASE_URL = os.getenv("DATABASE_URL")
 
 @pytest.fixture(scope="session")
 def test_engine():
-    engine = create_engine(TEST_DATABASE_URL)
+    engine = create_engine(TEST_DATABASE_URL) #type: ignore
     Base.metadata.create_all(engine)
     yield engine
     Base.metadata.drop_all(engine)

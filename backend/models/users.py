@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from datetime import datetime
 from sqlalchemy import String, DateTime, Boolean
 from sqlalchemy.orm import relationship, Mapped, mapped_column
@@ -53,20 +53,3 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan"
     )
-
-class UserAuthResponse(BaseModel):
-    access_token: str = Field(...)
-    token_type: str = Field(default="bearer", description="Token type")
-    user_id: UUID = Field(...)
-    username: str = Field(...)
-    email: str = Field(...)
-
-class UserResponse(BaseModel):
-    user_id: UUID = Field(...)
-    username: str = Field(..., min_length=1, max_length=100)
-    email: EmailStr = Field(..., min_length=1, max_length=100)
-
-class UserCreate(BaseModel):
-    username: str = Field(..., min_length=1, max_length=100)
-    email: EmailStr
-    password: str = Field(..., min_length=1, max_length=100)
