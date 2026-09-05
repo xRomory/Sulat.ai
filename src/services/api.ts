@@ -40,12 +40,12 @@ export const authApi = {
     username: string,
     email: string,
     password: string,
-  }): Promise<AuthResponse> => apiFetch("/auth/signup", "POST", data),
+  }): Promise<AuthResponse> => apiFetch("/users/signup", "POST", data),
 
   login: (data: {
     email: string,
     password: string,
-  }): Promise<AuthResponse> => apiFetch("/auth/login", "POST", data),
+  }): Promise<AuthResponse> => apiFetch("/users/login", "POST", data),
 };
 
 export const messageApi = {

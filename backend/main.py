@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from config import settings, ALLOW_ORIGINS
+from config import ALLOW_ORIGINS
 from routers import users_route
 
 app = FastAPI()

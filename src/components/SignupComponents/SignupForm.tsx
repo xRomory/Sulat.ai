@@ -42,7 +42,7 @@ export const SignupForm = () => {
     }
   };
 
-  const handleSignupSubmit = async (e: React.FormEvent) => {
+  const handleSignupSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setError({});
     setLoading(true);
@@ -192,7 +192,7 @@ export const SignupForm = () => {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#ffd45f] to-secondary hover:from-[#BFA3F3]/60 hover:to-accent font-semibold"
+              className="w-full bg-linear-to-r from-[#ffd45f] to-secondary hover:from-[#BFA3F3]/60 hover:to-accent font-semibold"
               disabled={loading}
             >
               {loading ? "Signing up..." : "Sign Up"}
